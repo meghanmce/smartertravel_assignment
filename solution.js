@@ -1,4 +1,4 @@
-/* let statement to set el as a local variable.  initializing it to document.getElementsByClassName('x').  
+/* initializing el to document.getElementsByClassName('x').  
 el stands for elements. */
 let el = document.getElementsByClassName.bind(document);
 
