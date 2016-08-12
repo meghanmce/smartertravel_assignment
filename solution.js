@@ -1,4 +1,4 @@
-/* initializing el to document.getElementsByClassName('x').  
+/* Initializing el to document.getElementsByClassName('x').  
 el stands for elements. */
 let el = document.getElementsByClassName.bind(document);
 
@@ -58,7 +58,7 @@ let config1 = {
     characterData: true
 };
 
-/* observe changes in the hotel listings */
+/* Observe changes in the hotel listings */
 observer1.observe(document.getElementById('hotel_listings'), config1); 
 
 /* Run once regardless */
