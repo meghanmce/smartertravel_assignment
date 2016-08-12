@@ -58,7 +58,7 @@ let config1 = {
     characterData: true
 };
 
-/* observe changes in the hotel lsitings */
+/* observe changes in the hotel listings */
 observer1.observe(document.getElementById('hotel_listings'), config1); 
 
 /* Run Once Regardless */
