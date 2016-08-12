@@ -29,7 +29,7 @@ observer.observe(inDate, config); //observe inDate element node (1)
 observer.observe(outDate, config); //observe outDate element node (1)
 observer.observe(destination, config); //observe destination element node (1)
 
-/* Run Once Regardless */
+/* Run once regardless */
 printDateAndDestination();
 
 /* Task 2 */
@@ -61,5 +61,5 @@ let config1 = {
 /* observe changes in the hotel listings */
 observer1.observe(document.getElementById('hotel_listings'), config1); 
 
-/* Run Once Regardless */
+/* Run once regardless */
 changeNumListings();
