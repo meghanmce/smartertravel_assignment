@@ -78,8 +78,6 @@ function clickSelect() {
         select.onclick = function(e) {
         window.open(e.target, "_blank");
         return false; // so that it doesn't change the original page                
-        //using returned e attributes
-        window.location = e.srcElement.attributes.href.textContent; 
         }   
     }
 }
