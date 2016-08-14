@@ -1,4 +1,4 @@
-/* Initializing el to document.getElementsByClassName('x').  
+/* let statement to set el as a local variable.  initializing it to document.getElementsByClassName('x').  
 el stands for elements. */
 let el = document.getElementsByClassName.bind(document);
 
@@ -29,7 +29,7 @@ observer.observe(inDate, config); //observe inDate element node (1)
 observer.observe(outDate, config); //observe outDate element node (1)
 observer.observe(destination, config); //observe destination element node (1)
 
-/* Run once regardless */
+/* Run Once Regardless */
 printDateAndDestination();
 
 /* Task 2 */
@@ -58,8 +58,44 @@ let config1 = {
     characterData: true
 };
 
-/* Observe changes in the hotel listings */
+/* observe changes in the hotel lsitings */
 observer1.observe(document.getElementById('hotel_listings'), config1); 
 
-/* Run once regardless */
+/* Run Once Regardless */
 changeNumListings();
+
+
+
+/* Task 3 Part 1*/ 
+
+/* get all the elements out of prominent_button do_show_rates class 
+   and set their onclick*/
+
+function clickSelect() {
+    for(var i in el('prominent_button do_show_rates')) {
+        let select = el('prominent_button do_show_rates')[i]; //select button
+        /* When clicking the select button for a hotel, open that specific hotel page */
+        select.onclick = function(e) {
+        window.open(e.target, "_blank");
+        return false; // so that it doesn't change the original page                
+        //using returned e attributes
+        window.location = e.srcElement.attributes.href.textContent; 
+        }   
+    }
+}
+
+let observer2 = new MutationObserver(function(mutations) {
+    clickSelect();
+});
+
+let config2 = {
+    attributes: true,
+    childList: true,
+    characterData: true
+};
+
+observer2.observe(document.getElementById('hotellist-quickview'), config2)
+
+
+/* Run Once Regardless */
+clickSelect();
