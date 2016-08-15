@@ -64,41 +64,7 @@ observer1.observe(document.getElementById('hotel_listings'), config1);
 /* Run Once Regardless */
 changeNumListings();
 
-
-
-/* Task 3 Part 1*/ 
-
-/* get all the elements out of prominent_button do_show_rates class 
-   and set their onclick*/
-
-function clickSelect() {
-    for(var i in el('prominent_button do_show_rates')) {
-        let select = el('prominent_button do_show_rates')[i]; //select button
-        /* When clicking the select button for a hotel, open that specific hotel page */
-        select.onclick = function(e) {
-        window.open(e.target, "_blank");
-        return false; // so that it doesn't change the original page                
-        }   
-    }
-}
-
-let observer2 = new MutationObserver(function(mutations) {
-    clickSelect();
-});
-
-let config2 = {
-    attributes: true,
-    childList: true,
-    characterData: true
-};
-
-observer2.observe(document.getElementById('hotellist-quickview'), config2)
-
-
-/* Run Once Regardless */
-clickSelect();
-
-/* Task 3 Part 2 */
+/* Task 3 */
 
 var hotellistcontain = false;
 var hotellist = new Array();
@@ -126,7 +92,8 @@ function changeSelect(){
     let selects = document.querySelectorAll("a.prominent_button.do_show_rates");
     for (var i = selects.length - 1; i >= 0; i--) {
         selects[i].onclick = function(event){
-            event.preventDefault();
+            // event.preventDefault();
+            window.open(event.target, "_blank");
             var link = this.href;
             var name = this.parentNode.parentNode.parentNode.childNodes[1].childNodes[0].childNodes[0];
             var hotelName = name.innerHTML;
@@ -161,7 +128,22 @@ function changeSelect(){
                 }
             }
             console.log(hotellist);
+            return false;
         }
     }
 }
+
+let observer2 = new MutationObserver(function(mutations) {
+    changeSelect();
+});
+
+let config2 = {
+    attributes: true,
+    childList: true,
+    characterData: true
+};
+
+observer2.observe(document.getElementById('hotellist-quickview'), config2);
+
+/* Run Once Regardless */ 
 changeSelect();
