@@ -92,7 +92,6 @@ function changeSelect(){
     let selects = document.querySelectorAll("a.prominent_button.do_show_rates");
     for (var i = selects.length - 1; i >= 0; i--) {
         selects[i].onclick = function(event){
-            // event.preventDefault();
             window.open(event.target, "_blank");
             var link = this.href;
             var name = this.parentNode.parentNode.parentNode.childNodes[1].childNodes[0].childNodes[0];
