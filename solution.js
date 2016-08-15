@@ -97,3 +97,70 @@ observer2.observe(document.getElementById('hotellist-quickview'), config2)
 
 /* Run Once Regardless */
 clickSelect();
+
+/* Task 3 Part 2 */
+
+var hotellistcontain = false;
+var hotellist = new Array();
+var hotelnameslist = new Array();
+
+function changeSelect(){
+    if(!hotellistcontain){
+        hotellistcontain = true;
+        var a = document.createElement('div');
+        a.setAttribute("id", "hotellistcontainer");
+        a.setAttribute("class", "module");
+        var b = document.createElement("h1");
+        var c = document.createTextNode("Selected Hotels");
+        b.appendChild(c);
+        var d = document.createElement('div');
+        d.setAttribute("id", "hotellistcontain");
+        var e = document.createElement('ul');
+        e.setAttribute("id", "hotellist");
+        d.appendChild(e);
+        a.appendChild(b);
+        a.appendChild(d);
+        var putlist = document.getElementById('list-view').childNodes[1]
+        putlist.insertBefore(a, putlist.childNodes[2]);
+    }
+    let selects = document.querySelectorAll("a.prominent_button.do_show_rates");
+    for (var i = selects.length - 1; i >= 0; i--) {
+        selects[i].onclick = function(event){
+            event.preventDefault();
+            var link = this.href;
+            var name = this.parentNode.parentNode.parentNode.childNodes[1].childNodes[0].childNodes[0];
+            var hotelName = name.innerHTML;
+            var hotel = [hotelName, link];
+            if(hotellist.length === 0){
+                hotellist.push(hotel);
+                hotelnameslist.push(hotelName);
+                console.log(hotellist);
+                document.getElementById("hotellist").innerHTML = "";
+                for (var j = hotellist.length - 1; j >= 0; j--) {
+                    var li = document.createElement("li");
+                    var lia = document.createElement("a");
+                    lia.setAttribute("href", hotellist[j][1]);
+                    var name = document.createTextNode(hotellist[j][0]);
+                    lia.appendChild(name);
+                    li.appendChild(lia);
+                    document.getElementById("hotellist").appendChild(li);
+                }
+            } else if(hotelnameslist.indexOf(hotelName) < 0 ){
+                hotellist.push(hotel);
+                hotelnameslist.push(hotelName);
+                console.log(hotellist);
+                document.getElementById("hotellist").innerHTML = "";
+                for (var j = hotellist.length - 1; j >= 0; j--) {
+                    var li = document.createElement("li");
+                    var lia = document.createElement("a");
+                    lia.setAttribute("href", hotellist[j][1]);
+                    var name = document.createTextNode(hotellist[j][0]);
+                    lia.appendChild(name);
+                    li.appendChild(lia);
+                    document.getElementById("hotellist").appendChild(li);
+                }
+            }
+            console.log(hotellist);
+        }
+    }
+}
