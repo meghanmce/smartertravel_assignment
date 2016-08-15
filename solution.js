@@ -86,7 +86,7 @@ function changeSelect(){
         d.appendChild(e);
         a.appendChild(b);
         a.appendChild(d);
-        var putlist = document.getElementById('list-view').childNodes[1]
+        var putlist = document.getElementById('list-view').childNodes[1];
         putlist.insertBefore(a, putlist.childNodes[2]);
     }
     let selects = document.querySelectorAll("a.prominent_button.do_show_rates");
