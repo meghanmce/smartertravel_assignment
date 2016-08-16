@@ -66,34 +66,9 @@ changeNumListings();
 
 /* Task 3 */
 
-var hotelListContain = false; // global variable to determine if div for storing hotels on DOM has been made
 var hotelList = new Array(); // global variable to retain information of all selected hotels
 
-function changeSelect(){
-
-    if(!hotelListContain){ // if changeSelect is being run for the first time
-        hotelListContain = true; // set to true so when changeSelect is run again on DOM mutation, all event handlers can be applied without accidentially creating another element in the DOM to store hotel names and links
-
-        // create main div to insert into DOM
-        var hotelListContainer = document.createElement('div');
-        hotelListContainer.setAttribute("id", "hotelListContainer");
-        hotelListContainer.setAttribute("class", "module");
-
-        // create header so user can clearly identify where selected hotels will be listed
-        var header = document.createElement("h1");
-        var headerText = document.createTextNode("Selected Hotels");
-        header.appendChild(headerText);
-
-        // create ul element to hold hotel list
-        var list = document.createElement('ul');
-        list.setAttribute("id", "hotelList");
-
-        // append header and ul to container div and insert aggregate element into DOM
-        hotelListContainer.appendChild(header);
-        hotelListContainer.appendChild(list);
-        document.getElementById('list-view').childNodes[1].insertBefore(hotelListContainer, document.getElementById('list-view').childNodes[1].childNodes[2]);
-    }
-
+function clickSelect() {
     // attach event listeners to all select buttons
     let selects = document.querySelectorAll("a.prominent_button.do_show_rates");
     for (var i = selects.length - 1; i >= 0; i--) {
@@ -106,6 +81,31 @@ function changeSelect(){
             return false; // stops the default loading of link
         }
     }
+}
+
+function changeSelect(){
+
+    // create main div to insert into DOM
+    var hotelListContainer = document.createElement('div');
+    hotelListContainer.setAttribute("id", "hotelListContainer");
+    hotelListContainer.setAttribute("class", "module");
+
+    // create header so user can clearly identify where selected hotels will be listed
+    var header = document.createElement("h1");
+    var headerText = document.createTextNode("Selected Hotels");
+    header.appendChild(headerText);
+
+    // create ul element to hold hotel list
+    var list = document.createElement('ul');
+    list.setAttribute("id", "hotelList");
+
+    // append header and ul to container div and insert aggregate element into DOM
+    hotelListContainer.appendChild(header);
+    hotelListContainer.appendChild(list);
+    document.getElementById('list-view').childNodes[1].insertBefore(hotelListContainer, document.getElementById('list-view').childNodes[1].childNodes[2]);
+
+    clickSelect(); 
+
 }
 
 function findHotelName(hotel){
@@ -133,7 +133,7 @@ function updateHotelList(hotel){
 }
 
 let observer2 = new MutationObserver(function(mutations) {
-    changeSelect();
+    clickSelect();
 });
 
 let config2 = {
