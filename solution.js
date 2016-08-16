@@ -66,69 +66,69 @@ changeNumListings();
 
 /* Task 3 */
 
-var hotellistcontain = false;
-var hotellist = new Array();
-var hotelnameslist = new Array();
+var hotelListContain = false; // global variable to determine if div for storing hotels on DOM has been made
+var hotelList = new Array(); // global variable to retain information of all selected hotels
 
 function changeSelect(){
-    if(!hotellistcontain){
-        hotellistcontain = true;
-        var a = document.createElement('div');
-        a.setAttribute("id", "hotellistcontainer");
-        a.setAttribute("class", "module");
-        var b = document.createElement("h1");
-        var c = document.createTextNode("Selected Hotels");
-        b.appendChild(c);
-        var d = document.createElement('div');
-        d.setAttribute("id", "hotellistcontain");
-        var e = document.createElement('ul');
-        e.setAttribute("id", "hotellist");
-        d.appendChild(e);
-        a.appendChild(b);
-        a.appendChild(d);
-        var putlist = document.getElementById('list-view').childNodes[1];
-        putlist.insertBefore(a, putlist.childNodes[2]);
+
+    if(!hotelListContain){ // if changeSelect is being run for the first time
+        hotelListContain = true; // set to true so when changeSelect is run again on DOM mutation, all event handlers can be applied without accidentially creating another element in the DOM to store hotel names and links
+
+        // create main div to insert into DOM
+        var hotelListContainer = document.createElement('div');
+        hotelListContainer.setAttribute("id", "hotelListContainer");
+        hotelListContainer.setAttribute("class", "module");
+
+        // create header so user can clearly identify where selected hotels will be listed
+        var header = document.createElement("h1");
+        var headerText = document.createTextNode("Selected Hotels");
+        header.appendChild(headerText);
+
+        // create ul element to hold hotel list
+        var list = document.createElement('ul');
+        list.setAttribute("id", "hotelList");
+
+        // append header and ul to container div and insert aggregate element into DOM
+        hotelListContainer.appendChild(header);
+        hotelListContainer.appendChild(list);
+        document.getElementById('list-view').childNodes[1].insertBefore(hotelListContainer, document.getElementById('list-view').childNodes[1].childNodes[2]);
     }
+
+    // attach event listeners to all select buttons
     let selects = document.querySelectorAll("a.prominent_button.do_show_rates");
     for (var i = selects.length - 1; i >= 0; i--) {
         selects[i].onclick = function(event){
-            window.open(event.target, "_blank");
-            var link = this.href;
-            var name = this.parentNode.parentNode.parentNode.childNodes[1].childNodes[0].childNodes[0];
-            var hotelName = name.innerHTML;
-            var hotel = [hotelName, link];
-            if(hotellist.length === 0){
-                hotellist.push(hotel);
-                hotelnameslist.push(hotelName);
-                console.log(hotellist);
-                document.getElementById("hotellist").innerHTML = "";
-                for (var j = hotellist.length - 1; j >= 0; j--) {
-                    var li = document.createElement("li");
-                    var lia = document.createElement("a");
-                    lia.setAttribute("href", hotellist[j][1]);
-                    var name = document.createTextNode(hotellist[j][0]);
-                    lia.appendChild(name);
-                    li.appendChild(lia);
-                    document.getElementById("hotellist").appendChild(li);
-                }
-            } else if(hotelnameslist.indexOf(hotelName) < 0 ){
-                hotellist.push(hotel);
-                hotelnameslist.push(hotelName);
-                console.log(hotellist);
-                document.getElementById("hotellist").innerHTML = "";
-                for (var j = hotellist.length - 1; j >= 0; j--) {
-                    var li = document.createElement("li");
-                    var lia = document.createElement("a");
-                    lia.setAttribute("href", hotellist[j][1]);
-                    var name = document.createTextNode(hotellist[j][0]);
-                    lia.appendChild(name);
-                    li.appendChild(lia);
-                    document.getElementById("hotellist").appendChild(li);
-                }
+            window.open(event.target, "_blank"); // open link in seperate tab
+            var hotel = {name: this.parentNode.parentNode.parentNode.childNodes[1].childNodes[0].childNodes[0].innerHTML, href: this.href}; // create hotel object to push into global hotel list array
+            if(hotelList.length === 0 || hotelList.find(findHotelName, [hotel.name]) === undefined){ // if hotel list is empty or the selected hotel is not a duplicate
+                updateHotelList(hotel); // update hotel list global array and update hotel list on DOM
             }
-            console.log(hotellist);
-            return false;
+            return false; // stops the default loading of link
         }
+    }
+}
+
+function findHotelName(hotel){
+    // Search all hotel objects inside global array hotel list for selected hotel
+    // name (i.e. checking for duplicates). If a duplicate is found, it will
+    // return the duplicate object, and if not, it will return undefined.
+    return hotel.name === this[0];
+}
+
+function updateHotelList(hotel){
+    // update global variables storing all user selected hotels
+    // and hotel names, then reproduce list of these hotels inside
+    // the DOM
+    hotelList.push(hotel);
+    document.getElementById("hotelList").innerHTML = ""; // clear previous list
+    for (var j = hotelList.length - 1; j >= 0; j--) {
+        var listelement = document.createElement("li"); // create list element
+        var listlink = document.createElement("a"); // create link element
+        listlink.setAttribute("href", hotelList[j].href); // give link element hotel link
+        var name = document.createTextNode(hotelList[j].name); // create text with hotel name
+        listlink.appendChild(name); // put hotel name inside link element
+        listelement.appendChild(listlink); // put link element inside list element
+        document.getElementById("hotelList").appendChild(listelement); // add completed list element to ul element at top of page
     }
 }
 
